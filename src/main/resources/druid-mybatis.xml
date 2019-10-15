@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 根标签 -->
+<configuration>
+    <properties>
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.1.31:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </properties>
+
+    <!--开启驼峰命名规则自动转换-->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--使用Druid作为连接池-->
+    <typeAliases>
+        <typeAlias type="com.demo.druid.DruidDataSourceFactory"
+                   alias="DRUID" />
+    </typeAliases>
+
+    <!-- 环境，可以配置多个，default：指定采用哪个环境 -->
+    <environments default="test">
+        <!-- id：唯一标识 -->
+        <environment id="test">
+            <!-- 事务管理器，JDBC类型的事务管理器 -->
+            <transactionManager type="JDBC"/>
+            <!-- 数据源，池类型的数据源 -->
+            <!-- 配置数据库连接信息 -->
+            <dataSource type="DRUID">
+                <!-- value属性值引用db.properties配置文件中配置的值 -->
+                <property name="driver" value="${driver}" />
+                <property name="url" value="${url}" />
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--配置mapper.xml的目录-->
+    <mappers>
+        <mapper resource="mapper/MyMapper.xml" />
+    </mappers>
+
+</configuration>
